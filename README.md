@@ -2,7 +2,7 @@
 
 ## Project Links
 
-- [add your github repo link]()
+- [github repo link](https://github.com/hbubley/react_app_project_2)
 - [add your deployment link]()
 
 ## Project Description
