@@ -8,14 +8,53 @@
 ## Project Description
 
 I will be building a health survey application involving a question display and response collection UI.  Responses would need to update application state to in order to support results pages. 
+AP HIGH 
+Database that filters out weed for you by strain effects. 
+Pulling from the API in the list provided to us (http://strains.evanbusse.com/) 
+Personality quiz that matches you to the perfect weed for your personality/state-of-mind/ill feelings
 
+answers are popped into an array 
+
+it will filter out a list 
 ## API
 
-Use this section to include info about the API you have chosen and a code snippet of the data that it returns and is required for your project. 
+http://strains.evanbusse.com/
+
+strainapi.evanbusse.com/API_KEY/strains/data/effects/STRAIN_ID
+strainapi.evanbusse.com/API_KEY/strains/search/effect/EFFECT
+
+API KEY: akuuKLy
 
 
 ```
-{data: {} }
+{data: {
+    "Afpak": {
+        "id": 1,
+        "race": "hybrid",
+        "flavors": [
+            "Earthy",
+            "Chemical",
+            "Pine"
+        ],
+        "effects": {
+            "positive": [
+                "Relaxed",
+                "Hungry",
+                "Happy",
+                "Sleepy"
+            ],
+            "negative": [
+                "Dizzy"
+            ],
+            "medical": [
+                "Depression",
+                "Insomnia",
+                "Pain",
+                "Stress",
+                "Lack of Appetite"
+            ]
+        }
+    },} }
 ```
 
 
@@ -35,10 +74,14 @@ The functionality will then be divided into two separate lists: MPV and PostMVP.
 - Find and use external api 
 - Render data on page 
 - Allow user to interact with the page
+- Input form that updates an array of data using state, pushing user input into array
+- filter using that array the api values
+- limit results on page
 
 #### PostMVP EXAMPLE
 
 - Add localStorage or firebase for storage
+- add api for location of nearest dispensary carrying the returned strain. 
 
 ## Components
 ##### Writing out your components and its descriptions isn't a required part of the proposal but can be helpful.
