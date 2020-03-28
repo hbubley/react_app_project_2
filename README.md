@@ -11,6 +11,44 @@
 I will be building a health survey application involving a question display and response collection UI.  Responses would need to update application state to in order to support results pages.
 I will most likely be using some form of storage, either local or to another API. 
 
+### Brainstorm:
+-RESEARCH BEFORE ARCHITECTURE:
+
+- [Local storage with useEffect hoook](https://www.udemy.com/course/modern-react-bootcamp/learn/lecture/14384908#overview)
+- useReduce
+- Could I have the original json saved as a state and alter it to save the user's answer by adding an answer value?
+
+- store values (can this be done with state? yes, look into the udemy)
+- step function to take questions forward and back
+- state conatiaining all the questions, state containing answers and questions, state handling step forward and back.
+- pull from json and then api
+- button that only appears after state containing questions and answers is equal in length to the state/list containing all the questions. 
+- post answers back to api after each submit to render results page
+
+#### Steps
+
+##### comp1 (PARENT)
+
+- ROUTE
+- take data from api/json and map over it to get individual questions
+- in object, have key that says hasAnswered = false, switches to true when user answers. (possibly a state?)
+
+##### comp1a (CHILD OF COMP 1)
+
+- map over individual questions in order to get all possible answers to appear as radio buttons
+- toggle hasAnswered state when user clicks an input
+- when the key hasAnswered = true, show 'next' button
+
+##### comp1b (CHILD OF COMP 1)
+
+- update state pushing quesiton id, question answer, and index into an array handled by state. Use local storage?
+- give state ability to work next, previous, and submit buttons
+
+##### comp2
+
+- ROUTE
+- takes user to updated results page
+
 ## API
 
 
@@ -32,22 +70,8 @@ Upload images of wireframe to cloudinary and add the link here with a descriptio
 ### MVP/PostMVP - 5min
 
 
-### Brainstorm:
-RESEARCH BEFORE ARCHITECTURE:
-- [Local storage with useEffect hoook](https://www.udemy.com/course/modern-react-bootcamp/learn/lecture/14384908#overview)
-- useReduce
-- Could I have the original json saved as a state and alter it to save the user's answer by adding an answer value?
 
-
-- store values (can this be done with state? yes, look into the udemy)
-- step function to take questions forward and back
-- state conatiaining all the questions, state containing answers and questions, state handling step forward and back.
-- pull from json and then api
-- button that only appears after state containing questions and answers is equal in length to the state/list containing all the questions. 
-- post answers back to api after each submit to render results page
-
-
-#### MVP EXAMPLE
+#### MVP
 - Find and use external api
 - Render data on page
 - Allow user to interact with the page
@@ -55,7 +79,7 @@ RESEARCH BEFORE ARCHITECTURE:
 - filter using that array the api values
 - limit results on page
 
-#### PostMVP EXAMPLE
+#### PostMVP 
 
 - Add localStorage or firebase for storage
 - add api for location of nearest dispensary carrying the returned strain.
