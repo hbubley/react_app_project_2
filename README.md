@@ -65,7 +65,7 @@ I will most likely be using some form of storage, either local or to another API
 
 - const increment = () => setStep(push(index));
 
-- <button onClick={increment} disabled={(step.length === userAnswer.length && hasAnswered===true) ? true : false}>
+- <button onClick={increment} disabled={(step.length === userAnswer.length && hasAnswered===true) ? false : true}>
 ```
 
 - when user answers a question, store question answer key to user answer. When hasAnswered === true, (toggle hook) user has the ability to go to the next question. 
@@ -114,9 +114,10 @@ Based on the initial logic defined in the previous sections try and breakdown th
 
 | Component | Description |
 | --- | :---: |  
-| App | This will make the initial data pull and include React Router|
+| App | This will make the initial data pull and include React Router|o[pl]
 | Header | This will render the header include the nav |
-| Footer | This will render the header include the nav |
+| Survey |
+| Footer | This will render the footer|
 
 
 Time frames are also key in the development cycle.  You have limited time to code all phases of the game.  Your estimates can then be used to evalute game possibilities based on time needed and the actual time you have before game must be submitted. It's always best to pad the time by a few hours so that you account for the unknown so add and additional hour or two to each component to play it safe. Also, put a gif at the top of your Readme before you pitch, and you'll get a panda prize.
@@ -154,7 +155,7 @@ Question HTMML:
                         </label>
 
                         <label class="answer btn btn-lg btn-light text-primary mr-2">
-                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA5">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                            <input style="display: inline-block; vertical-align: baseline;" value="s" type="radio" name="CFRA5">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
                         </label>
 
                     </div>
