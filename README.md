@@ -9,53 +9,15 @@
 ## Project Description
 
 I will be building a health survey application involving a question display and response collection UI.  Responses would need to update application state to in order to support results pages.
-AP HIGH
-Database that filters out weed for you by strain effects.
-Pulling from the API in the list provided to us (http://strains.evanbusse.com/)
-Personality quiz that matches you to the perfect weed for your personality/state-of-mind/ill feelings
+I will most likely be using some form of storage, either local or to another API. 
 
-answers are popped into an array
-
-it will filter out a list
 ## API
 
-http://strains.evanbusse.com/
 
-strainapi.evanbusse.com/API_KEY/strains/data/effects/STRAIN_ID
-strainapi.evanbusse.com/API_KEY/strains/search/effect/EFFECT
-
-API KEY: akuuKLy
 
 
 ```
-{data: {
-    "Afpak": {
-        "id": 1,
-        "race": "hybrid",
-        "flavors": [
-            "Earthy",
-            "Chemical",
-            "Pine"
-        ],
-        "effects": {
-            "positive": [
-                "Relaxed",
-                "Hungry",
-                "Happy",
-                "Sleepy"
-            ],
-            "negative": [
-                "Dizzy"
-            ],
-            "medical": [
-                "Depression",
-                "Insomnia",
-                "Pain",
-                "Stress",
-                "Lack of Appetite"
-            ]
-        }
-    },} }
+{data: { }}
 ```
 
 
@@ -68,8 +30,17 @@ Upload images of wireframe to cloudinary and add the link here with a descriptio
 
 
 ### MVP/PostMVP - 5min
+RESEARCH BEFORE ARCHITECTURE:
+- [Local storage with useEffect hoook](https://www.udemy.com/course/modern-react-bootcamp/learn/lecture/14384908#overview)
+- useReduce
 
-The functionality will then be divided into two separate lists: MPV and PostMVP.  Carefully decided what is placed into your MVP as the client will expect this functionality to be implemented upon project completion.  
+- store values (can this be done with state? yes, look into the udemy)
+- step function to take questions forward and back
+- state conatiaining all the questions, state containing answers and questions, state handling step forward and back.
+- pull from json and then api
+- button that only appears after state containing questions and answers is equal in length to the state/list containing all the questions. 
+- post answers back to api after each submit to render results page
+
 
 #### MVP EXAMPLE
 - Find and use external api
@@ -112,7 +83,228 @@ Time frames are also key in the development cycle.  You have limited time to cod
 Use this section to include a brief code snippet of functionality that you are proud of an a brief description.  Code snippet should not be greater than 10 lines of code.
 
 ```
-function reverse(string) {
-	// here is the code to reverse a string of text
-}
+
 ```
+<!-- 
+Important Code:
+```
+Question HTMML:
+
+    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">5. Has the person fallen in the past 12 months?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA5">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA5">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA5">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+window.storedFormValues = JSON.parse('{"CFRA33": "No", "CFRA32": "Yes", "CFRA31": "No", "CFRA30": "Yes", "CFRA37": "No", "CFRA36": "Yes", "CFRA35": "No", "CFRA34": "Yes", "CFRA38": "Unknown", "CFRA19": "No", "CFRA18": "No", "CFRA11": "No", "CFRA10": "Unknown", "CFRA13": "No", "CFRA12": "No", "CFRA15": "No", "CFRA14": "No", "CFRA17": "No", "CFRA16": "No", "CFRA1": "Yes", "CFRA3": "No", "CFRA2": "No", "CFRA5": "No", "CFRA4": "Unknown", "CFRA7": "Yes", "CFRA6": "No", "CFRA9": "No", "CFRA8": "No", "CFRA24": "No", "CFRA25": "Yes", "CFRA26": "No", "CFRA27": "No", "CFRA20": "Unknown", "CFRA21": "Unknown", "CFRA22": "No", "CFRA23": "No", "CFRA28": "Yes", "CFRA29": "No"}');
+
+        var $loader = $('#loader');
+        var $visibleQuestion = $('.question.active');
+        var $submitBtn = $('.submit');
+        var $questions = $('.questions');
+        var $progressBar = $('.progress-bar');
+        var totalQuestionCount = $questions.children().length;
+        var respondedQuestionCount = _.size(window.storedFormValues);
+
+        $(function() {
+            $(document)
+                .on('click', '.answer input', onAnswerClick)
+                .on('click', '.back', onBackClick)
+                .on('click', '.next', onNextClick);
+
+            adjustQuestionsHeight($questions, $visibleQuestion);
+
+            if (window.storedFormValues) {
+                loadStoredFormValues(true);
+            }
+
+
+ Old code for updating progress bar:
+
+ function updateProgressBar() {
+            $progressBar.css('width', (respondedQuestionCount / totalQuestionCount) * 100 + '%');
+        }
+
+        function updateSubmitButton() {
+            if (totalQuestionCount === respondedQuestionCount) {
+                $submitBtn
+                    .removeClass('disabled')
+                    .fadeIn();
+            }
+        } 
+
+ function onBackClick(e) {
+            e.preventDefault();
+
+            var $previousQuestion = $visibleQuestion.prev();
+
+            if ($previousQuestion.length) {
+                moveBack($visibleQuestion, $previousQuestion);
+                $visibleQuestion = $previousQuestion;
+                adjustQuestionsHeight($questions, $visibleQuestion);
+            }
+        }
+
+        function onNextClick(e) {
+            e.preventDefault();
+
+            var $nextQuestion = $visibleQuestion.next();
+
+            if ($nextQuestion.length) {
+                moveForward($visibleQuestion, $nextQuestion);
+                $visibleQuestion = $nextQuestion;
+                adjustQuestionsHeight($questions, $visibleQuestion);
+
+                if (!$visibleQuestion.next().length) {
+                    $submitBtn.fadeIn();
+                }
+            }
+        }
+
+        function submitResponse(key, value, callback) {
+            $.ajax({
+                type: "PATCH",
+                url: "/api/patientvisit/14/",
+                data: JSON.stringify({
+                    mds_data: window.storedFormValues,
+                    changes: [{
+                        type: "ASSESSMENT",
+                        key: key,
+                        value: value
+                    }]
+                }),
+                success: function(response) {
+                    if (
+                        response &&
+                        !_.isUndefined(response["mds_data"])
+                    ) {
+                        window.storedFormValues = response["mds_data"];
+
+                        loadStoredFormValues(false, response["new_changes"]);
+
+                        if (callback) {
+                            callback(response);
+                        }
+                    }
+                },
+                contentType: "application/json"
+            });
+        }
+
+        function loadStoredFormValues(isInitialLoad, newChanges) {
+            if (newChanges) {
+                _.forEach(newChanges, function(change) {
+                    updateFormValues(
+                        change.field,
+                        change.value,
+                        change.user,
+                        change.datetime
+                    );
+                });
+            } else {
+                for (field in window.storedFormValues) {
+                    updateFormValues(field, window.storedFormValues[field]);
+                }
+            }
+
+            respondedQuestionCount = _.size(window.storedFormValues);
+
+            updateProgressBar();
+            updateSubmitButton();
+        }
+
+        function updateFormValues(field, value) {
+            var $inputs = $('[name="' + field + '"]');
+
+            if ($inputs.length) {
+                if ($inputs.eq(0)[0].type == "checkbox") {
+                    if (value == "1") {
+                        $inputs.prop("checked", true);
+                    } else {
+                        $inputs.prop("checked", false);
+                    }
+                } else {
+                    if ($inputs.eq(0).is(":radio")) {
+                        $inputs.val([value]);
+                    } else {
+                        $inputs.val(value);
+                    }
+                }
+
+                $inputs.eq(0).closest('.question').addClass('responded');
+            }
+        }
+
+        function moveBack($visibleQuestion, $previousQuestion) {
+            $visibleQuestion
+                .removeClass('animating')
+                .removeClass('previous')
+                .addClass('next')
+                .addClass('animating')
+                .removeClass('active');
+            $previousQuestion
+                .removeClass('animating')
+                .addClass('.previous')
+                .removeClass('.next')
+                .addClass('animating')
+                .addClass('active');
+
+            if ($previousQuestion.prev().length) {
+                $('.back').removeClass('disabled');
+            } else {
+                $('.back').addClass('disabled');
+            }
+
+            if ($previousQuestion.next().length && $previousQuestion.hasClass('responded')) {
+                $('.next').removeClass('disabled');
+            } else {
+                $('.next').addClass('disabled');
+            }
+        }
+step functions
+        function moveForward($visibleQuestion, $nextQuestion) {
+            $visibleQuestion
+                .removeClass('animating')
+                .removeClass('next')
+                .addClass('previous')
+                .addClass('animating')
+                .removeClass('active')
+                .addClass('responded');
+            $nextQuestion
+                .removeClass('animating')
+                .addClass('.next')
+                .removeClass('.previous')
+                .addClass('animating')
+                .addClass('active');
+
+            if ($nextQuestion.prev().length) {
+                $('.back').removeClass('disabled');
+            } else {
+                $('.back').addClass('disabled');
+            }
+
+            if ($nextQuestion.next().length && $nextQuestion.hasClass('responded')) {
+                $('.next').removeClass('disabled');
+            } else {
+                $('.next').addClass('disabled');
+            }
+        }
+
+        function adjustQuestionsHeight($questions, $visibleQuestion) {
+            $questions.css('height', $visibleQuestion.height() + parseInt($visibleQuestion.css('padding'), 10) * 2);
+        }
+    </script>
+
+```        
+-->

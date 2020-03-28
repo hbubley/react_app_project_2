@@ -1,0 +1,303 @@
+{
+    "denominator": 33,
+    "numerator": 9,
+    "percentage_answered": 0.868421052631579,
+    "frailty_index": 0.2727272727272727,
+    "frailty_label": "Mildly Frail",
+    "frailty_description": "A Frailty Risk Score between 25% and 29% indicates someone who is managing well but is less fit now and likely not as physically active. Even so, the person will likely do well in rehab and return to baseline health and function. Our clinical care is designed to support a full recovery while avoiding any new health problems.",
+    "domains": {
+        "function": {
+            "denominator": 4,
+            "numerator": 2,
+            "deficits": {
+                "equipment": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                },
+                "balance": {
+                    "denominator": 1,
+                    "numerator": null,
+                    "counted": false
+                },
+                "strength": {
+                    "denominator": 1,
+                    "numerator": 1,
+                    "counted": true
+                },
+                "exercise": {
+                    "denominator": 1,
+                    "numerator": 1,
+                    "counted": true
+                },
+                "falls": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                }
+            },
+            "percentage_answered": 0.8,
+            "counted": 4,
+            "total_denominator": 5
+        },
+        "incontinence": {
+            "denominator": 2,
+            "numerator": 1,
+            "deficits": {
+                "bladder_incontinence": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                },
+                "bowel_incontinence": {
+                    "denominator": 1,
+                    "numerator": 1,
+                    "counted": true
+                }
+            },
+            "percentage_answered": 1,
+            "counted": 2,
+            "total_denominator": 2
+        },
+        "senses": {
+            "denominator": 3,
+            "numerator": 1,
+            "deficits": {
+                "communication": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                },
+                "vision": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                },
+                "hearing": {
+                    "denominator": 1,
+                    "numerator": 1,
+                    "counted": true
+                }
+            },
+            "percentage_answered": 1,
+            "counted": 3,
+            "total_denominator": 3
+        },
+        "social_habits": {
+            "denominator": 2,
+            "numerator": 1,
+            "deficits": {
+                "smoking": {
+                    "denominator": 1,
+                    "numerator": 1,
+                    "counted": true
+                },
+                "alcohol": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                }
+            },
+            "percentage_answered": 1,
+            "counted": 2,
+            "total_denominator": 2
+        },
+        "mood": {
+            "denominator": 2,
+            "numerator": 0,
+            "deficits": {
+                "depressed": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                }
+            },
+            "percentage_answered": 1,
+            "counted": 2,
+            "total_denominator": 2
+        },
+        "nutrition": {
+            "denominator": 1,
+            "numerator": 0,
+            "deficits": {
+                "weight_change": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                }
+            },
+            "percentage_answered": 0.5,
+            "counted": 1,
+            "total_denominator": 2
+        },
+        "self_care": {
+            "denominator": 5,
+            "numerator": 0,
+            "deficits": {
+                "transfer": {
+                    "denominator": 1,
+                    "numerator": null,
+                    "counted": false
+                },
+                "bathing": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                },
+                "eating": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                },
+                "walking": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                },
+                "dressing": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                }
+            },
+            "percentage_answered": 0.8333333333333334,
+            "counted": 5,
+            "total_denominator": 6
+        },
+        "risk": {
+            "denominator": 1,
+            "numerator": 0,
+            "deficits": {
+                "infection_risk": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                }
+            },
+            "percentage_answered": 0,
+            "counted": true,
+            "total_denominator": 1
+        },
+        "symptoms": {
+            "denominator": 3,
+            "numerator": 1,
+            "deficits": {
+                "swallowing_difficulty": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                },
+                "breathing_difficulty": {
+                    "denominator": 1,
+                    "numerator": 1,
+                    "counted": true
+                },
+                "drowsiness": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                },
+                "pain": {
+                    "denominator": 1,
+                    "numerator": null,
+                    "counted": false
+                }
+            },
+            "percentage_answered": 0.75,
+            "counted": 3,
+            "total_denominator": 4
+        },
+        "medication": {
+            "denominator": 1,
+            "numerator": 0,
+            "deficits": {
+                "5_medications_or_more": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                }
+            },
+            "percentage_answered": 0,
+            "counted": true,
+            "total_denominator": 1
+        },
+        "daily_living": {
+            "denominator": 6,
+            "numerator": 3,
+            "deficits": {
+                "walking": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                },
+                "shopping": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                },
+                "medication_management": {
+                    "denominator": 1,
+                    "numerator": 1,
+                    "counted": true
+                },
+                "cooking": {
+                    "denominator": 1,
+                    "numerator": 1,
+                    "counted": true
+                },
+                "telephone_use": {
+                    "denominator": 1,
+                    "numerator": null,
+                    "counted": false
+                },
+                "housework": {
+                    "denominator": 1,
+                    "numerator": 1,
+                    "counted": true
+                },
+                "paying_bills": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                }
+            },
+            "percentage_answered": 0.8571428571428571,
+            "counted": 6,
+            "total_denominator": 7
+        },
+        "condition": {
+            "denominator": 1,
+            "numerator": 0,
+            "deficits": {
+                "skin_breakdown": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                }
+            },
+            "percentage_answered": 0,
+            "counted": true,
+            "total_denominator": 1
+        },
+        "cognitive": {
+            "denominator": 2,
+            "numerator": 0,
+            "deficits": {
+                "reasoning": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                },
+                "memory": {
+                    "denominator": 1,
+                    "numerator": 0,
+                    "counted": true
+                }
+            },
+            "percentage_answered": 1,
+            "counted": 2,
+            "total_denominator": 2
+        }
+    },
+    "total_denominator": 38
+}

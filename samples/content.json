@@ -1,0 +1,307 @@
+{
+    "CFRA33": {
+        "negative_answer": "No",
+        "domain": "senses",
+        "weight": 1,
+        "question": "Is the person's hearing adequate with or without a hearing aid?",
+        "deficit": "hearing",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA32": {
+        "negative_answer": "No",
+        "domain": "senses",
+        "weight": 1,
+        "question": "Is the person's vision adequate, with or without glasses?",
+        "deficit": "vision",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA31": {
+        "negative_answer": "Yes",
+        "domain": "condition",
+        "weight": 1,
+        "question": "Does the person have any open areas or wounds on your skin?",
+        "deficit": "skin_breakdown",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA30": {
+        "negative_answer": "Yes",
+        "domain": "incontinence",
+        "weight": 1,
+        "question": "Does the person have bowel incontinence?",
+        "deficit": "bowel_incontinence",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA37": {
+        "negative_answer": "Yes",
+        "domain": "symptoms",
+        "weight": 1,
+        "question": "In the past six months has the person often felt sleepy during the daytime?",
+        "deficit": "drowsiness",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA36": {
+        "negative_answer": "Yes",
+        "domain": "symptoms",
+        "weight": 1,
+        "question": "Does the person regularly experience shortness of breath?",
+        "deficit": "breathing_difficulty",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA35": {
+        "negative_answer": "Yes",
+        "domain": "symptoms",
+        "weight": 1,
+        "question": "Does the person cough after swallowing solids or liquids?",
+        "deficit": "swallowing_difficulty",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA34": {
+        "negative_answer": "No",
+        "domain": "senses",
+        "weight": 1,
+        "question": "When the person is spoken to, are they usually able to understand what is said?",
+        "deficit": "communication",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA38": {
+        "negative_answer": "Yes",
+        "domain": "symptoms",
+        "weight": 1,
+        "question": "In the past six months has the person often felt pain that required medication?",
+        "deficit": "pain",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA19": {
+        "negative_answer": "Yes",
+        "domain": "self_care",
+        "weight": 1,
+        "question": "Does the person need help eating?",
+        "deficit": "eating",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA18": {
+        "negative_answer": "Yes",
+        "domain": "self_care",
+        "weight": 1,
+        "question": "Does the person need help dressing?",
+        "deficit": "dressing",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "version": "1.0.0",
+    "CFRA11": {
+        "negative_answer": "Yes",
+        "domain": "mood",
+        "weight": 1,
+        "question": "In the past six months has the person often felt down, depressed, or hopeless?",
+        "deficit": "depressed",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA10": {
+        "negative_answer": "Yes",
+        "domain": "nutrition",
+        "weight": 1,
+        "question": "In the past six months has the person often felt nervous, anxious, or on edge?",
+        "deficit": "weight_change",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA13": {
+        "negative_answer": "Yes",
+        "domain": "cognitive",
+        "weight": 1,
+        "question": "In the past six months has the person often had difficulty remembering or recalling events?",
+        "deficit": "memory",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA12": {
+        "negative_answer": "Yes",
+        "domain": "mood",
+        "weight": 1,
+        "question": "In the past six months has the person often felt little interest or pleasure in doing things?",
+        "deficit": "depressed",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA15": {
+        "negative_answer": "Yes",
+        "domain": "medication",
+        "weight": 1,
+        "question": "Does the person take five or more medications every day?",
+        "deficit": "5_medications_or_more",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA14": {
+        "negative_answer": "Yes",
+        "domain": "cognitive",
+        "weight": 1,
+        "question": "In the past six months has the person often had difficulty finding words or finishing a sentence?",
+        "deficit": "reasoning",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA17": {
+        "negative_answer": "Yes",
+        "domain": "self_care",
+        "weight": 1,
+        "question": "Does the person need help bathing/showering?",
+        "deficit": "bathing",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA16": {
+        "negative_answer": "No",
+        "domain": "daily_living",
+        "weight": 1,
+        "question": "Does the person manage or set out their own medications? If the person does not take medications, would they be able to manage them themselves?",
+        "deficit": "medication_management",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA1": {
+        "negative_answer": "Yes",
+        "domain": "risk",
+        "weight": 1,
+        "question": "Does the person have hypertension, diabetes, immuno deficiency or a chronic respiratory condition?",
+        "deficit": "infection_risk",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA3": {
+        "negative_answer": "No",
+        "domain": "function",
+        "weight": 1,
+        "question": "Is the person's overall strength adequate to get around?",
+        "deficit": "strength",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA2": {
+        "negative_answer": "No",
+        "domain": "function",
+        "weight": 1,
+        "question": "Does the person exercise regularly or take part in a physical exercise program?",
+        "deficit": "exercise",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA5": {
+        "negative_answer": "Yes",
+        "domain": "function",
+        "weight": 1,
+        "question": "Has the person fallen in the past 12 months?",
+        "deficit": "falls",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA4": {
+        "negative_answer": "Yes",
+        "domain": "function",
+        "weight": 1,
+        "question": "Is the person's balance impaired?",
+        "deficit": "balance",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA7": {
+        "negative_answer": "Yes",
+        "domain": "social_habits",
+        "weight": 1,
+        "question": "In the last 30 days, has the person used tobacco or smoked?",
+        "deficit": "smoking",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA6": {
+        "negative_answer": "Yes",
+        "domain": "function",
+        "weight": 1,
+        "question": "Does the person use a cane, walker, wheelchair or other medical equipment?",
+        "deficit": "equipment",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA9": {
+        "negative_answer": "Yes",
+        "domain": "nutrition",
+        "weight": 1,
+        "question": "Has the person had any unintentional weight loss of 10 lbs, or more in the past 6 months?",
+        "deficit": "weight_change",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA8": {
+        "negative_answer": "Yes",
+        "domain": "social_habits",
+        "weight": 1,
+        "question": "Does the person often drink more than one alcoholic beverage in a day?",
+        "deficit": "alcohol",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA24": {
+        "negative_answer": "Yes",
+        "domain": "daily_living",
+        "weight": 1,
+        "question": "Does the person need help getting outside?",
+        "deficit": "walking",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA25": {
+        "negative_answer": "Yes",
+        "domain": "daily_living",
+        "weight": 1,
+        "question": "Does the person need help cooking meals?",
+        "deficit": "cooking",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA26": {
+        "negative_answer": "Yes",
+        "domain": "daily_living",
+        "weight": 1,
+        "question": "Does the person need help shopping?",
+        "deficit": "shopping",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA27": {
+        "negative_answer": "Yes",
+        "domain": "daily_living",
+        "weight": 1,
+        "question": "Does the person need help paying bills?",
+        "deficit": "paying_bills",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA20": {
+        "negative_answer": "Yes",
+        "domain": "self_care",
+        "weight": 1,
+        "question": "Does the person need help for getting out of bed or a chair?",
+        "deficit": "transfer",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA21": {
+        "negative_answer": "Yes",
+        "domain": "daily_living",
+        "weight": 1,
+        "question": "Does the person need help using the telephone?",
+        "deficit": "telephone_use",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA22": {
+        "negative_answer": "Yes",
+        "domain": "self_care",
+        "weight": 1,
+        "question": "Does the person need help walking?",
+        "deficit": "walking",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA23": {
+        "negative_answer": "Yes",
+        "domain": "self_care",
+        "weight": 1,
+        "question": "Does the person need help climbing stairs?",
+        "deficit": "walking",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA28": {
+        "negative_answer": "Yes",
+        "domain": "daily_living",
+        "weight": 1,
+        "question": "Does the person need help with housework?",
+        "deficit": "housework",
+        "answer_options": ["Yes", "No", "Unknown"]
+    },
+    "CFRA29": {
+        "negative_answer": "Yes",
+        "domain": "incontinence",
+        "weight": 1,
+        "question": "Does the person have urinary incontinence?",
+        "deficit": "bladder_incontinence",
+        "answer_options": ["Yes", "No", "Unknown"]
+    }
+}

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="PatientPattern.com" />
+    <title>Patient Pattern</title>
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/patientpattern.fontawesome/v5.8.2/css/all.min.css">
+    <style>
+        body {
+            background: rgb(246, 246, 246);
+            touch-action: manipulation;
+        }
+        
+        .bg-white {
+            background: #fff;
+        }
+        
+        .badge-info {
+            background-color: #9F86FF;
+        }
+        
+        .badge-info[href]:hover,
+        .badge-info[href]:focus {
+            background-color: #7753ff;
+        }
+        
+        .bg-tab-content {
+            border: 1px solid #dee2e6;
+            border-top: none;
+            box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.02);
+            border-radius: 0 0 6px 6px;
+        }
+        
+        .loader {
+            position: fixed;
+            z-index: 9999999999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.75);
+        }
+        
+        .loader img {
+            position: absolute;
+            margin: auto;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .loader img.spin {
+            -webkit-animation: spin 4s linear infinite;
+            -moz-animation: spin 4s linear infinite;
+            animation: spin 4s linear infinite;
+        }
+        
+        #drift-widget-container {
+            z-index: 1039 !important;
+        }
+        
+        .staging-banner {
+            background-size: auto auto;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 238, 1, .5) 10px, rgba(255, 238, 1, .5) 20px);
+        }
+        
+        @-moz-keyframes spin {
+            100% {
+                -moz-transform: rotate(1620deg);
+            }
+        }
+        
+        @-webkit-keyframes spin {
+            100% {
+                -webkit-transform: rotate(1620deg);
+            }
+        }
+        
+        @keyframes spin {
+            100% {
+                -webkit-transform: rotate(1620deg);
+                transform: rotate(1620deg);
+            }
+        }
+        
+        .container > .tab-content {
+            padding: 15px 10px 20px !important;
+        }
+        
+        .container {
+            max-width: 1300px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        
+        .secondary-nav .nav-link {
+            border-radius: 0;
+            border-bottom: 3px solid #fff;
+        }
+        
+        .secondary-nav .nav-link:hover {
+            border-bottom: 3px solid #007bff2e;
+        }
+        
+        .secondary-nav .nav-link.active {
+            background: #fff;
+            color: #444;
+            border-bottom: 3px solid #007bff;
+        }
+        
+        @media (min-width: 768px) {
+            body > .container {
+                padding-right: 15px;
+                padding-left: 15px;
+            }
+            .container > .tab-content {
+                padding: 12px 20px 20px !important;
+            }
+        }
+        
+        @media (min-width: 1330px) {
+            body > .container {
+                padding-right: 0;
+                padding-left: 0;
+            }
+        }
+        
+        @media print {
+            .print-only {
+                display: block;
+            }
+            .hide-for-print {
+                display: none;
+            }
+        }
+        
+        .nav-tabs {
+            border-bottom: none;
+        }
+        
+        .navbar-dark .navbar-nav .nav-link {
+            color: #fff;
+        }
+        
+        .dropdown-user .nav-link {
+            color: #444 !important;
+        }
+        
+        .dropdown-user .nav-link:hover {
+            color: #222 !important;
+            background: #f2f2f2;
+        }
+        
+        body {
+            padding-bottom: 60px;
+        }
+        
+        .bg-tab-content {
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+        }
+        
+        .content {
+            padding: 15px 23px 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .breadcrumb {
+            display: block;
+        }
+        
+        .breadcrumb-item.active {
+            display: block;
+            margin-top: 10px;
+        }
+        
+        .breadcrumb-item+.breadcrumb-item::before {
+            display: none;
+        }
+        
+        .update-responses {
+            display: block;
+            margin-top: 5px;
+        }
+        
+        @media (min-width: 1200px) {
+            .bg-white {
+                margin-right: 10%;
+                margin-left: 10%;
+            }
+        }
+        
+        @media (min-width: 680px) {
+            .breadcrumb {
+                display: flex;
+            }
+            .breadcrumb-item.active {
+                display: inline-block;
+                margin-top: 0;
+            }
+            .breadcrumb-item+.breadcrumb-item::before {
+                display: inline-block;
+            }
+            .update-responses {
+                display: inline-block;
+                margin-top: 0;
+            }
+        }
+        
+        .form-group {
+            display: inline-block;
+            vertical-align: top;
+        }
+        
+        .form-control {
+            border-color: #999 !important;
+        }
+        
+        .hr-divider {
+            position: relative;
+            line-height: 20px;
+            margin: 20px 0 40px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        
+        .hr-divider:before {
+            position: absolute;
+            top: 50%;
+            display: block;
+            content: "";
+            width: 100%;
+            height: 1px;
+            background-color: #eee;
+        }
+        
+        .hr-divider-content {
+            position: relative;
+            z-index: 2;
+            display: inline-block;
+            padding-left: 1em;
+            padding-right: 1em;
+            color: #555;
+            vertical-align: middle;
+            background-color: #fff;
+        }
+        
+        .hr-divider-heading {
+            margin-top: 0;
+            margin-bottom: 0;
+            color: inherit;
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .hr-divider-nav > li > a {
+            padding-top: 4px;
+            padding-bottom: 4px;
+            font-size: 100%;
+        }
+        
+        .hr-divider-nav > .active > a {
+            font-weight: 300;
+            background: transparent;
+        }
+        
+        .bg-full-danger,
+        .bg-full-danger:hover,
+        .badge-danger,
+        .badge-danger:hover {
+            background: #E64759;
+            color: #fff;
+        }
+        
+        .bg-default,
+        .badge-default {
+            background: #aaa;
+            color: #fff;
+        }
+        
+        .bg-full-warning,
+        .bg-full-warning:hover,
+        .badge-warning,
+        .badge-warning:hover,
+        .badge-warning {
+            background: #F39C12;
+            color: #fff;
+        }
+        
+        .bg-full-primary,
+        .bg-full-primary:hover {
+            background: #337ab7;
+            color: #fff;
+        }
+        
+        .bg-full-info,
+        .bg-full-info:hover {
+            background: #007EE9;
+            color: #fff;
+        }
+        
+        .pull-right {
+            float: right;
+        }
+        
+        .bg-full-success,
+        .bg-full-success:hover,
+        .badge-success,
+        .badge-success:hover {
+            background: #1BC98E;
+            color: #fff;
+        }
+        
+        .bg-full-muted,
+        .bg-full-muted:hover {
+            background: #ddd;
+        }
+        
+        .legend {
+            vertical-align: top;
+            text-align: center;
+        }
+        
+        .legend span {
+            display: inline-block;
+            height: 20px;
+            width: 20px;
+            background: #000;
+            border: 1px solid #fff;
+            border-radius: 50%;
+            vertical-align: top;
+            margin: 0 3px 0 10px;
+        }
+        
+        .legend .healthy {
+            height: 4px;
+            width: 25px;
+            border-radius: 0;
+            border: none;
+            background: #007ee5;
+            margin-top: 8px;
+        }
+        
+        .legend .population {
+            vertical-align: top;
+            display: inline-block;
+            margin: 3px 3px 0 10px;
+        }
+        
+        .legend .population span {
+            display: inline-block;
+            vertical-align: top;
+            height: 15px;
+            width: 15px;
+            background: #000;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            margin: 0;
+        }
+        
+        .col-2-ul {
+            columns: 2;
+            -webkit-columns: 2;
+            -moz-columns: 2;
+            list-style-position: inside;
+            padding-left: 0;
+        }
+        
+        .col-2-ul li {
+            margin-left: 0;
+            list-style-position: outside;
+        }
+        
+        .breadcrumb {
+            background: #fff;
+            margin: 0;
+        }
+        
+        .breadcrumb-item.active {
+            color: #222;
+        }
+        
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+            }
+            #changelog {
+                max-height: none;
+            }
+            tr:nth-child(even) td {
+                background-color: #eee !important;
+                -webkit-print-color-adjust: exact;
+            }
+            .results-container,
+            .fixed-nav {
+                overflow: auto !important;
+                height: auto !important;
+            }
+            #preparedness .col-sm-6 {
+                display: block;
+                width: 100%;
+                margin-top: 10px;
+            }
+            .print-only {
+                display: block;
+            }
+            #last_day_rate,
+            #total_payment {
+                display: block !important;
+            }
+            .hide-for-print,
+            #notes,
+            #changelog,
+            #length_of_stay,
+            .additional-details-toggle {
+                display: none !important;
+            }
+            .tab-pane {
+                zoom: .80;
+            }
+            #pdpm-assistant .tab-pane,
+            #results #additional-cmi,
+            #results #additional-financial {
+                display: block !important;
+            }
+            .loader {
+                display: none !important;
+            }
+            #notes {
+                margin-top: 30px;
+            }
+            #pdpm-assistant > .row > .col-md-8,
+            .save-pdf,
+            #drift-widget-container,
+            .nav-tabs.m-t.m-b-0,
+            #changelog,
+            #DataTables_Table_0_wrapper,
+            #notes form {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="pp-navbar" class="navbar-container container" style="background: #007bff;">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <a class="navbar-brand" href="/livepac/"><img height="26" src="/static/2016/img/pp-logo-badge-white.png" style="display: inline;"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-light" id="navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+                     bkellgren@gmail.com <span class="caret"></span>
+                     </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li class="divider"></li>
+                            <li class="nav-item"><a class="nav-link" href="/accounts/logout/"><i class="fal fa-sign-out fa-fw"></i> Log out</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="bg-white bg-tab-content mt-4">
+            <div class="content pb-5">
+                <div class="row mb-4">
+                    <div class="col-8">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/app/assessments/clinical/"><i class="far fa-chevron-left"></i>&nbsp; All Patients</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    <strong>Patient:</strong> AAA &nbsp; <strong>Age:</strong> 22 &nbsp;&nbsp;<a class="update-responses" href="/app/respond/14/">Update Responses</a>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-4 text-right" style="padding-top: .75rem;">
+                        <a href="?pdf" class="btn-link save-pdf"><i class="fal fa-file-pdf"></i> Download PDF</a>
+                    </div>
+                </div>
+                <div class="hr-divider mb-4 mt-2">
+                    <h2 class="hr-divider-content hr-divider-heading">
+                     <i class="far fa-calendar"></i>&nbsp; March 27, 2020
+                  </h2>
+                </div>
+                <div class="row mt-4 mb-4">
+                    <div class="col-sm-3 text-center">
+                        <h5><strong><img src="/static/2016/img/pp-logo-badge.png" height="25" style="margin-top: -4px;" /> Frailty Risk</strong></h5>
+                        <span class="badge badge-warning" style="font-size: 34px;">
+                     30.3%
+                     </span>
+                    </div>
+                    <div class="col-sm-9 mt-4 mt-xs-0">
+                        <h5><strong><span class="text-warning">Moderately Frail</span></strong></h5> A Frailty Risk Score <strong>between 30% and 39%</strong> indicates someone who is moderately frail. Fatigue and other symptoms may have limited activities and now they are <strong>less likely to return to baseline health and function</strong>. Completing rehab may be difficult. Optimized clinical approach should be personalized, and every effort will be made to support recovery and prevent bad outcomes from occurring. <strong>Understanding care priorities and preference are very important and documenting advance directives will help honor their wishes.</strong>
+                    </div>
+                </div>
+                <div class="shortcuts row mt-4 pt-2 mb-1 pl-sm-5 pr-sm-5">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card text-white bg-full-danger mb-3">
+                            <div class="card-header d-flex">
+                                <strong>
+                           Risk
+                           <small style="display: block; font-size: 14px; font-weight: 500;">Severe Deficit <i style="font-size: 14px; font-weight: 500;" class="fal fa-info-circle hide-for-print" data-toggle="tooltip" data-container="body" title="Infection Risk" data-html="true" data-original-title="Infection Risk"></i></small>
+                           </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card text-white bg-full-success mb-3">
+                            <div class="card-header d-flex">
+                                <strong>
+                           Function
+                           <small style="display: block; font-size: 14px; font-weight: 500;">No Deficit</small>
+                           </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card text-white bg-full-success mb-3">
+                            <div class="card-header d-flex">
+                                <strong>
+                           Nutrition
+                           <small style="display: block; font-size: 14px; font-weight: 500;">No Deficit</small>
+                           </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card text-white bg-full-success mb-3">
+                            <div class="card-header d-flex">
+                                <strong>
+                           Senses
+                           <small style="display: block; font-size: 14px; font-weight: 500;">No Deficit</small>
+                           </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card text-white bg-full-success mb-3">
+                            <div class="card-header d-flex">
+                                <strong>
+                           Social Habits
+                           <small style="display: block; font-size: 14px; font-weight: 500;">No Deficit</small>
+                           </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card text-white bg-full-success mb-3">
+                            <div class="card-header d-flex">
+                                <strong>
+                           Mood
+                           <small style="display: block; font-size: 14px; font-weight: 500;">No Deficit</small>
+                           </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card text-white bg-full-success mb-3">
+                            <div class="card-header d-flex">
+                                <strong>
+                           Incontinence
+                           <small style="display: block; font-size: 14px; font-weight: 500;">No Deficit</small>
+                           </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card text-white bg-full-success mb-3">
+                            <div class="card-header d-flex">
+                                <strong>
+                           Self Care
+                           <small style="display: block; font-size: 14px; font-weight: 500;">No Deficit</small>
+                           </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card text-white bg-full-success mb-3">
+                            <div class="card-header d-flex">
+                                <strong>
+                           Daily Living
+                           <small style="display: block; font-size: 14px; font-weight: 500;">No Deficit</small>
+                           </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card text-white bg-full-success mb-3">
+                            <div class="card-header d-flex">
+                                <strong>
+                           Symptoms
+                           <small style="display: block; font-size: 14px; font-weight: 500;">No Deficit</small>
+                           </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card text-white bg-full-success mb-3">
+                            <div class="card-header d-flex">
+                                <strong>
+                           Medication
+                           <small style="display: block; font-size: 14px; font-weight: 500;">No Deficit</small>
+                           </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card text-white bg-full-success mb-3">
+                            <div class="card-header d-flex">
+                                <strong>
+                           Condition
+                           <small style="display: block; font-size: 14px; font-weight: 500;">No Deficit</small>
+                           </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card text-white bg-full-success mb-3">
+                            <div class="card-header d-flex">
+                                <strong>
+                           Cognitive
+                           <small style="display: block; font-size: 14px; font-weight: 500;">No Deficit</small>
+                           </strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="text-center mt-5">
+            <a href="/"><img height="80" src="/static/2016/img/pp-logo.png"></a>
+        </p>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</body>
+</html>

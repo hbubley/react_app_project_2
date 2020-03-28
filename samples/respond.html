@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="PatientPattern.com" />
+    <title>Patient Pattern</title>
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/patientpattern.fontawesome/v5.8.2/css/all.min.css">
+    <style>
+        body {
+            background: rgb(246, 246, 246);
+            touch-action: manipulation;
+        }
+        
+        .bg-white {
+            background: #fff;
+        }
+        
+        .badge-info {
+            background-color: #9F86FF;
+        }
+        
+        .badge-info[href]:hover,
+        .badge-info[href]:focus {
+            background-color: #7753ff;
+        }
+        
+        .bg-tab-content {
+            border: 1px solid #dee2e6;
+            border-top: none;
+            box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.02);
+            border-radius: 0 0 6px 6px;
+        }
+        
+        .loader {
+            position: fixed;
+            z-index: 9999999999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.75);
+        }
+        
+        .loader img {
+            position: absolute;
+            margin: auto;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .loader img.spin {
+            -webkit-animation: spin 4s linear infinite;
+            -moz-animation: spin 4s linear infinite;
+            animation: spin 4s linear infinite;
+        }
+        
+        #drift-widget-container {
+            z-index: 1039 !important;
+        }
+        
+        .staging-banner {
+            background-size: auto auto;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 238, 1, .5) 10px, rgba(255, 238, 1, .5) 20px);
+        }
+        
+        @-moz-keyframes spin {
+            100% {
+                -moz-transform: rotate(1620deg);
+            }
+        }
+        
+        @-webkit-keyframes spin {
+            100% {
+                -webkit-transform: rotate(1620deg);
+            }
+        }
+        
+        @keyframes spin {
+            100% {
+                -webkit-transform: rotate(1620deg);
+                transform: rotate(1620deg);
+            }
+        }
+        
+        .container > .tab-content {
+            padding: 15px 10px 20px !important;
+        }
+        
+        .container {
+            max-width: 1300px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        
+        .secondary-nav .nav-link {
+            border-radius: 0;
+            border-bottom: 3px solid #fff;
+        }
+        
+        .secondary-nav .nav-link:hover {
+            border-bottom: 3px solid #007bff2e;
+        }
+        
+        .secondary-nav .nav-link.active {
+            background: #fff;
+            color: #444;
+            border-bottom: 3px solid #007bff;
+        }
+        
+        @media (min-width: 768px) {
+            body > .container {
+                padding-right: 15px;
+                padding-left: 15px;
+            }
+            .container > .tab-content {
+                padding: 12px 20px 20px !important;
+            }
+        }
+        
+        @media (min-width: 1330px) {
+            body > .container {
+                padding-right: 0;
+                padding-left: 0;
+            }
+        }
+        
+        @media print {
+            .print-only {
+                display: block;
+            }
+            .hide-for-print {
+                display: none;
+            }
+        }
+        
+        .nav-tabs {
+            border-bottom: none;
+        }
+        
+        .navbar-dark .navbar-nav .nav-link {
+            color: #fff;
+        }
+        
+        .dropdown-user .nav-link {
+            color: #444 !important;
+        }
+        
+        .dropdown-user .nav-link:hover {
+            color: #222 !important;
+            background: #f2f2f2;
+        }
+        
+        body {
+            padding-bottom: 60px;
+        }
+        
+        .bg-tab-content {
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+        }
+        
+        .content {
+            padding: 15px 23px 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        @media (min-width: 1200px) {
+            .bg-white {
+                margin-right: 10%;
+                margin-left: 10%;
+            }
+        }
+        
+        .questions {
+            transition: height .5s ease;
+            min-height: 250px;
+        }
+        
+        .question {
+            transform: translateX(100%);
+            -webkit-transform: translateX(100%);
+            position: absolute;
+            opacity: 0;
+            min-height: 250px;
+        }
+        
+        .question.animating {
+            transition: transform .5s ease, opacity .25s ease;
+        }
+        
+        .question.previous {
+            transform: translateX(-100%);
+            -webkit-transform: translateX(-100%);
+        }
+        
+        .question.active {
+            transform: translateX(0);
+            -webkit-transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .submit {
+            display: none;
+        }
+        
+        .back-next-controls {
+            display: block;
+            margin-top: 20px;
+        }
+        
+        .breadcrumb {
+            background: #fff;
+            margin: 0;
+        }
+        
+        .breadcrumb-item.active {
+            color: #222;
+        }
+        
+        @media (min-width: 500px) {
+            .back-next-controls {
+                display: inline-block;
+                margin-top: 0;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="pp-navbar" class="navbar-container container" style="background: #007bff;">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <a class="navbar-brand" href="/livepac/"><img height="26" src="/static/2016/img/pp-logo-badge-white.png" style="display: inline;"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-light" id="navbar-collapse">
+
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+                    bkellgren@gmail.com <span class="caret"></span>
+                </a>
+                        <ul class="dropdown-menu dropdown-user">
+
+                            <li class="divider"></li>
+                            <li class="nav-item"><a class="nav-link" href="/accounts/logout/"><i class="fal fa-sign-out fa-fw"></i> Log out</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+
+        <div class="bg-white bg-tab-content mt-4">
+            <div class="content">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb pl-4 pl-md-5">
+
+                        <li class="breadcrumb-item"><a href="/app/assessments/clinical/"><i class="far fa-chevron-left"></i>&nbsp; All Patients</a></li>
+
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <strong>Patient:</strong> AAA &nbsp; <strong>Age:</strong> 22
+                        </li>
+                    </ol>
+                </nav>
+                <div class="progress ml-4 ml-md-5 mr-4 mr-md-5">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="questions">
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5 active">
+                        <h3 class="mb-4">1. Does the person have hypertension, diabetes, immuno deficiency or a chronic respiratory condition?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA1">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA1">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA1">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">2. Does the person exercise regularly or take part in a physical exercise program?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA2">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA2">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA2">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">3. Is the person&#39;s overall strength adequate to get around?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA3">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA3">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA3">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">4. Is the person&#39;s balance impaired?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA4">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA4">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA4">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">5. Has the person fallen in the past 12 months?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA5">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA5">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA5">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">6. Does the person use a cane, walker, wheelchair or other medical equipment?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA6">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA6">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA6">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">7. In the last 30 days, has the person used tobacco or smoked?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA7">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA7">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA7">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">8. Does the person often drink more than one alcoholic beverage in a day?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA8">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA8">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA8">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">9. Has the person had any unintentional weight loss of 10 lbs, or more in the past 6 months?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA9">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA9">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA9">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">10. In the past six months has the person often felt nervous, anxious, or on edge?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA10">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA10">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA10">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">11. In the past six months has the person often felt down, depressed, or hopeless?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA11">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA11">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA11">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">12. In the past six months has the person often felt little interest or pleasure in doing things?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA12">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA12">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA12">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">13. In the past six months has the person often had difficulty remembering or recalling events?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA13">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA13">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA13">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">14. In the past six months has the person often had difficulty finding words or finishing a sentence?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA14">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA14">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA14">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">15. Does the person take five or more medications every day?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA15">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA15">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA15">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">16. Does the person manage or set out their own medications? If the person does not take medications, would they be able to manage them themselves?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA16">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA16">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA16">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">17. Does the person need help bathing/showering?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA17">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA17">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA17">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">18. Does the person need help dressing?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA18">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA18">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA18">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">19. Does the person need help eating?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA19">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA19">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA19">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">20. Does the person need help for getting out of bed or a chair?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA20">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA20">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA20">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">21. Does the person need help using the telephone?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA21">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA21">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA21">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">22. Does the person need help walking?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA22">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA22">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA22">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">23. Does the person need help climbing stairs?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA23">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA23">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA23">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">24. Does the person need help getting outside?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA24">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA24">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA24">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">25. Does the person need help cooking meals?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA25">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA25">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA25">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">26. Does the person need help shopping?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA26">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA26">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA26">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">27. Does the person need help paying bills?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA27">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA27">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA27">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">28. Does the person need help with housework?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA28">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA28">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA28">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">29. Does the person have urinary incontinence?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA29">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA29">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA29">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">30. Does the person have bowel incontinence?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA30">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA30">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA30">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">31. Does the person have any open areas or wounds on your skin?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA31">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA31">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA31">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">32. Is the person&#39;s vision adequate, with or without glasses?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA32">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA32">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA32">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">33. Is the person&#39;s hearing adequate with or without a hearing aid?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA33">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA33">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA33">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">34. When the person is spoken to, are they usually able to understand what is said?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA34">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA34">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA34">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">35. Does the person cough after swallowing solids or liquids?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA35">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA35">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA35">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">36. Does the person regularly experience shortness of breath?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA36">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA36">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA36">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">37. In the past six months has the person often felt sleepy during the daytime?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA37">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA37">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA37">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                    <div class="question mb-4 pt-4 p-4 p-md-5">
+                        <h3 class="mb-4">38. In the past six months has the person often felt pain that required medication?</h3>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Yes" type="radio" name="CFRA38">&nbsp; <span style="display: inline-block; vertical-align: middle;">Yes</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="No" type="radio" name="CFRA38">&nbsp; <span style="display: inline-block; vertical-align: middle;">No</span>
+                        </label>
+
+                        <label class="answer btn btn-lg btn-light text-primary mr-2">
+                            <input style="display: inline-block; vertical-align: baseline;" value="Unknown" type="radio" name="CFRA38">&nbsp; <span style="display: inline-block; vertical-align: middle;">Unknown</span>
+                        </label>
+
+                    </div>
+
+                </div>
+                <p class="mt-4 pl-md-5 pr-4 pr-md-5">
+                    <a href="/app/result/14/" class="submit btn btn-lg btn-primary disabled mr-2">Submit Responses</a>
+                    <span class="back-next-controls">
+                <a href="#" class="back btn btn-light disabled mr-2"><i class="fal fa-arrow-left"></i>&nbsp; Back</a>
+                <a href="#" class="next btn btn-light disabled">Next &nbsp;<i class="fal fa-arrow-right"></i></a>
+            </span>
+                </p>
+            </div>
+        </div>
+        <p class="text-center mt-5">
+            <a href="/"><img height="80" src="/static/2016/img/pp-logo.png"></a>
+        </p>
+        <div id="loader" class="loader">
+            <img class="spin" src="/static/2016/img/pp-logo-badge.png" height="83" width="75" />
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js" integrity="sha256-7/yoZS3548fXSRXqc/xYzjsmuW3sFKzuvOCHd06Pmps=" crossorigin="anonymous"></script>
+    <script>
+        window.storedFormValues = JSON.parse('{"CFRA33": "No", "CFRA32": "Yes", "CFRA31": "No", "CFRA30": "Yes", "CFRA37": "No", "CFRA36": "Yes", "CFRA35": "No", "CFRA34": "Yes", "CFRA38": "Unknown", "CFRA19": "No", "CFRA18": "No", "CFRA11": "No", "CFRA10": "Unknown", "CFRA13": "No", "CFRA12": "No", "CFRA15": "No", "CFRA14": "No", "CFRA17": "No", "CFRA16": "No", "CFRA1": "Yes", "CFRA3": "No", "CFRA2": "No", "CFRA5": "No", "CFRA4": "Unknown", "CFRA7": "Yes", "CFRA6": "No", "CFRA9": "No", "CFRA8": "No", "CFRA24": "No", "CFRA25": "Yes", "CFRA26": "No", "CFRA27": "No", "CFRA20": "Unknown", "CFRA21": "Unknown", "CFRA22": "No", "CFRA23": "No", "CFRA28": "Yes", "CFRA29": "No"}');
+
+        var $loader = $('#loader');
+        var $visibleQuestion = $('.question.active');
+        var $submitBtn = $('.submit');
+        var $questions = $('.questions');
+        var $progressBar = $('.progress-bar');
+        var totalQuestionCount = $questions.children().length;
+        var respondedQuestionCount = _.size(window.storedFormValues);
+
+        $(function() {
+            $(document)
+                .on('click', '.answer input', onAnswerClick)
+                .on('click', '.back', onBackClick)
+                .on('click', '.next', onNextClick);
+
+            adjustQuestionsHeight($questions, $visibleQuestion);
+
+            if (window.storedFormValues) {
+                loadStoredFormValues(true);
+            }
+
+            if ($visibleQuestion.next().length && $visibleQuestion.hasClass('responded')) {
+                $('.next').removeClass('disabled');
+            } else {
+                $('.next').addClass('disabled');
+            }
+
+            $loader.hide();
+        });
+
+        function onAnswerClick() {
+            var $selectedAnswer = $(this);
+            var $nextQuestion = $visibleQuestion.next();
+
+            $loader.show();
+
+            submitResponse(
+                $selectedAnswer.attr('name'),
+                $selectedAnswer.val(),
+                function(response) {
+                    $loader.hide();
+                }
+            );
+
+            if ($nextQuestion.length) {
+                moveForward($visibleQuestion, $nextQuestion);
+
+                $visibleQuestion = $nextQuestion;
+
+                adjustQuestionsHeight($questions, $visibleQuestion);
+
+                if ($visibleQuestion.next().length && $visibleQuestion.hasClass('responded')) {
+                    $('.next').removeClass('disabled');
+                } else {
+                    $('.next').addClass('disabled');
+                }
+            }
+        }
+
+        function updateProgressBar() {
+            $progressBar.css('width', (respondedQuestionCount / totalQuestionCount) * 100 + '%');
+        }
+
+        function updateSubmitButton() {
+            if (totalQuestionCount === respondedQuestionCount) {
+                $submitBtn
+                    .removeClass('disabled')
+                    .fadeIn();
+            }
+        }
+
+        function onBackClick(e) {
+            e.preventDefault();
+
+            var $previousQuestion = $visibleQuestion.prev();
+
+            if ($previousQuestion.length) {
+                moveBack($visibleQuestion, $previousQuestion);
+                $visibleQuestion = $previousQuestion;
+                adjustQuestionsHeight($questions, $visibleQuestion);
+            }
+        }
+
+        function onNextClick(e) {
+            e.preventDefault();
+
+            var $nextQuestion = $visibleQuestion.next();
+
+            if ($nextQuestion.length) {
+                moveForward($visibleQuestion, $nextQuestion);
+                $visibleQuestion = $nextQuestion;
+                adjustQuestionsHeight($questions, $visibleQuestion);
+
+                if (!$visibleQuestion.next().length) {
+                    $submitBtn.fadeIn();
+                }
+            }
+        }
+
+        function submitResponse(key, value, callback) {
+            $.ajax({
+                type: "PATCH",
+                url: "/api/patientvisit/14/",
+                data: JSON.stringify({
+                    mds_data: window.storedFormValues,
+                    changes: [{
+                        type: "ASSESSMENT",
+                        key: key,
+                        value: value
+                    }]
+                }),
+                success: function(response) {
+                    if (
+                        response &&
+                        !_.isUndefined(response["mds_data"])
+                    ) {
+                        window.storedFormValues = response["mds_data"];
+
+                        loadStoredFormValues(false, response["new_changes"]);
+
+                        if (callback) {
+                            callback(response);
+                        }
+                    }
+                },
+                contentType: "application/json"
+            });
+        }
+
+        function loadStoredFormValues(isInitialLoad, newChanges) {
+            if (newChanges) {
+                _.forEach(newChanges, function(change) {
+                    updateFormValues(
+                        change.field,
+                        change.value,
+                        change.user,
+                        change.datetime
+                    );
+                });
+            } else {
+                for (field in window.storedFormValues) {
+                    updateFormValues(field, window.storedFormValues[field]);
+                }
+            }
+
+            respondedQuestionCount = _.size(window.storedFormValues);
+
+            updateProgressBar();
+            updateSubmitButton();
+        }
+
+        function updateFormValues(field, value) {
+            var $inputs = $('[name="' + field + '"]');
+
+            if ($inputs.length) {
+                if ($inputs.eq(0)[0].type == "checkbox") {
+                    if (value == "1") {
+                        $inputs.prop("checked", true);
+                    } else {
+                        $inputs.prop("checked", false);
+                    }
+                } else {
+                    if ($inputs.eq(0).is(":radio")) {
+                        $inputs.val([value]);
+                    } else {
+                        $inputs.val(value);
+                    }
+                }
+
+                $inputs.eq(0).closest('.question').addClass('responded');
+            }
+        }
+
+        function moveBack($visibleQuestion, $previousQuestion) {
+            $visibleQuestion
+                .removeClass('animating')
+                .removeClass('previous')
+                .addClass('next')
+                .addClass('animating')
+                .removeClass('active');
+            $previousQuestion
+                .removeClass('animating')
+                .addClass('.previous')
+                .removeClass('.next')
+                .addClass('animating')
+                .addClass('active');
+
+            if ($previousQuestion.prev().length) {
+                $('.back').removeClass('disabled');
+            } else {
+                $('.back').addClass('disabled');
+            }
+
+            if ($previousQuestion.next().length && $previousQuestion.hasClass('responded')) {
+                $('.next').removeClass('disabled');
+            } else {
+                $('.next').addClass('disabled');
+            }
+        }
+
+        function moveForward($visibleQuestion, $nextQuestion) {
+            $visibleQuestion
+                .removeClass('animating')
+                .removeClass('next')
+                .addClass('previous')
+                .addClass('animating')
+                .removeClass('active')
+                .addClass('responded');
+            $nextQuestion
+                .removeClass('animating')
+                .addClass('.next')
+                .removeClass('.previous')
+                .addClass('animating')
+                .addClass('active');
+
+            if ($nextQuestion.prev().length) {
+                $('.back').removeClass('disabled');
+            } else {
+                $('.back').addClass('disabled');
+            }
+
+            if ($nextQuestion.next().length && $nextQuestion.hasClass('responded')) {
+                $('.next').removeClass('disabled');
+            } else {
+                $('.next').addClass('disabled');
+            }
+        }
+
+        function adjustQuestionsHeight($questions, $visibleQuestion) {
+            $questions.css('height', $visibleQuestion.height() + parseInt($visibleQuestion.css('padding'), 10) * 2);
+        }
+    </script>
+</body>
+
+</html>
