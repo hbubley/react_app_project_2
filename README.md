@@ -49,9 +49,24 @@ I will most likely be using some form of storage, either local or to another API
 
 #### STATES
 
-##### [userAnswer, setUserAnswer] = [{}]
+##### [userAnswer, setUserAnswer] = useState[{question}:{answer}]
+
+##### [step, setStep] = useState[{index}]
 
 ##### [hasAnswered, setHasAnswered] = [false]
+
+``` HTML
+- if hasAnswered === [true]{
+    push index to step state
+}
+- if step.length === userAnswer.length{
+    enable next button
+}
+
+- const increment = () => setStep(push(index));
+
+- <button onClick={increment} disabled={(step.length === userAnswer.length && hasAnswered===true) ? true : false}>
+```
 
 - when user answers a question, store question answer key to user answer. When hasAnswered === true, (toggle hook) user has the ability to go to the next question. 
 - useEffect for local storage will update whenever userAnswer has changed. 
@@ -72,6 +87,7 @@ I will most likely be using some form of storage, either local or to another API
 Upload images of wireframe to cloudinary and add the link here with a description of the specific wireframe. Also, define the the React components and the architectural design of your app.
 
 - [add link to your wireframes]()
+
 - [add link to your react architecture]()
 
 
