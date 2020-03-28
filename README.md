@@ -30,9 +30,14 @@ Upload images of wireframe to cloudinary and add the link here with a descriptio
 
 
 ### MVP/PostMVP - 5min
+
+
+### Brainstorm:
 RESEARCH BEFORE ARCHITECTURE:
 - [Local storage with useEffect hoook](https://www.udemy.com/course/modern-react-bootcamp/learn/lecture/14384908#overview)
 - useReduce
+- Could I have the original json saved as a state and alter it to save the user's answer by adding an answer value?
+
 
 - store values (can this be done with state? yes, look into the udemy)
 - step function to take questions forward and back
