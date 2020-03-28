@@ -1,24 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React,{useState} from 'react';
+import SurveyData from './Components/SurveyData'
+import Results from './Components/Results'
+import surveyJSON from './content.json'
+import {Route} from "react-router-dom";
 
 function App() {
+  console.log("APP-JSON", surveyJSON)
+  console.log("APP TYPE OF", typeof surveyJSON)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Route exact path="/" render = {props => <SurveyData {...props} surveyJSON = {surveyJSON} />} />
+    <Route exact path="/results" render = {props => <Results {...props} surveyJSON = {surveyJSON} />} />
     </div>
   );
 }
