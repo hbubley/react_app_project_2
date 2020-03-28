@@ -17,12 +17,10 @@ I will most likely be using some form of storage, either local or to another API
 - [Local storage with useEffect hoook](https://www.udemy.com/course/modern-react-bootcamp/learn/lecture/14384908#overview)
 - useReduce
 - Could I have the original json saved as a state and alter it to save the user's answer by adding an answer value?
-
-- store values (can this be done with state? yes, look into the udemy)
 - step function to take questions forward and back
 - state conatiaining all the questions, state containing answers and questions, state handling step forward and back.
 - pull from json and then api
-- button that only appears after state containing questions and answers is equal in length to the state/list containing all the questions. 
+- button that only appears after state containing questionss and answers is equal in length to the state/list containing all the questions. 
 - post answers back to api after each submit to render results page
 
 #### Steps
@@ -48,6 +46,16 @@ I will most likely be using some form of storage, either local or to another API
 
 - ROUTE
 - takes user to updated results page
+
+#### STATES
+
+##### [userAnswer, setUserAnswer] = [{}]
+
+##### [hasAnswered, setHasAnswered] = [false]
+
+- when user answers a question, store question answer key to user answer. When hasAnswered === true, (toggle hook) user has the ability to go to the next question. 
+- useEffect for local storage will update whenever userAnswer has changed. 
+
 
 ## API
 
@@ -81,8 +89,7 @@ Upload images of wireframe to cloudinary and add the link here with a descriptio
 
 #### PostMVP 
 
-- Add localStorage or firebase for storage
-- add api for location of nearest dispensary carrying the returned strain.
+- post results
 
 ## Components
 ##### Writing out your components and its descriptions isn't a required part of the proposal but can be helpful.
